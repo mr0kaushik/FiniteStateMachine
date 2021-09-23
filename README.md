@@ -9,7 +9,9 @@ format for input.txt
 <comma_separated_initial_states>
 <comma_separated_final_states>
 
-<string_to_check>
+<strings_to_check>
+<strings_to_check>
+<strings_to_check>
 ```
 
 Example
@@ -24,5 +26,7 @@ Example
 1,2
 2
 
-bb
+abaa
+abba
+acad
 ```
