@@ -15,9 +15,10 @@ class Transition {
 
 class FiniteStateMachine {
     private int noOfNodes;
-    private Map<Character, int[][]> inputMatrices;
-    private int[][] initialStates, finalStates;
 
+    private Map<Character, int[][]> inputMatrices;
+
+    private int[][] initialStates, finalStates;
 
     FiniteStateMachine(int noOfNodes, List<Transition> transitionList,
                        String initialStatesInString, String finalStatesInString) {
@@ -41,6 +42,16 @@ class FiniteStateMachine {
         // parse transitions list into matrices;
         parseTransitionList(transitionList);
     }
+
+    /**
+     *          0 1
+     *          ___
+     *  b : 0 | 1 0
+     *      1 | 0 1
+     *
+     * @param transitionList
+     */
+
 
     private void parseTransitionList(List<Transition> transitionList) {
         for (Transition transition : transitionList) {
@@ -71,8 +82,8 @@ class FiniteStateMachine {
     }
 
     void prettyPrint() {
-        System.out.println("Input States : " + Arrays.deepToString(initialStates));
-        System.out.println("Final States : " + Arrays.deepToString(finalStates));
+        System.out.println("Initial States : " + Arrays.deepToString(initialStates));
+        System.out.println("Transpose of Final States : " + Arrays.deepToString(finalStates));
 
         for (var entry : inputMatrices.entrySet()) {
             System.out.println(entry.getKey() + ":");
@@ -109,6 +120,7 @@ class FiniteStateMachine {
                 }
             }
         }
+
         result = multiplyMatrices(result, finalStates);
 
         return result[0][0] == 1;
@@ -117,18 +129,20 @@ class FiniteStateMachine {
 
 public class FSM {
     public static void main(String[] args) {
-        BufferedReader bufferedReader = null;
+
         try {
             // Input Read
             // -------------------
-            bufferedReader = new BufferedReader(new FileReader("res/input.txt"));
+            BufferedReader bufferedReader = new BufferedReader(new FileReader("res/input.txt"));
+
             int noOfNodes = Integer.parseInt(bufferedReader.readLine());
             // line break
             bufferedReader.readLine();
+
             List<Transition> transitionList = new ArrayList<>();
 
             String line;
-            while (!(line = bufferedReader.readLine()).isEmpty()) {
+            while ((line = bufferedReader.readLine()) != null && !line.isEmpty()) {
                 transitionList.add(new Transition(line));
             }
 
@@ -136,18 +150,21 @@ public class FSM {
             String finalStates = bufferedReader.readLine();
 
 
-            // line break
-            bufferedReader.readLine();
-
-            String stringToCheck = bufferedReader.readLine();
-
 
             // Working Code
             FiniteStateMachine fsm = new FiniteStateMachine(noOfNodes, transitionList, initialStates, finalStates);
-
             fsm.prettyPrint();
 
-            System.out.println(stringToCheck + " : " + fsm.checkString(stringToCheck));
+            System.out.println("Running Test Cases : ");
+            System.out.println("------------------------");
+
+
+            // line break
+            bufferedReader.readLine();
+            String stringToCheck;
+            while((stringToCheck = bufferedReader.readLine()) != null && !stringToCheck.isEmpty()) {
+                System.out.println(stringToCheck + " : " + fsm.checkString(stringToCheck));
+            }
 
 
         } catch (IOException e) {

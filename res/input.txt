@@ -8,4 +8,8 @@
 1,2
 2
 
-bb
+abaa
+abba
+acad
+
+
